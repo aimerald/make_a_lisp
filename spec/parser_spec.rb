@@ -14,7 +14,7 @@ RSpec.describe "Parser.executeにS式を渡すと配列になる" do
    
   it "(print (join (join 'think' 'different') 'this' 'is' (join 'apple' 'world!')))" do
     code = '(print (join (join "think" "different") "this" "is" (join "apple" "world!")))'
-    expects = [:print, [:join, [:join, "think", "different"], "this", "is", [:join, "apple", "world"]]]
+    expects = [:print, [:join, [:join, "think", "different"], "this", "is", [:join, "apple", "world!"]]]
     expect(Parser.execute(code: code)).to eq(expects)
   end
   

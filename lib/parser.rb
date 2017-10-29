@@ -3,41 +3,40 @@ require 'pry'
 class Parser
   class << self
     def execute(code:)
-      s_to_array(s_exp(code))
+      read_from(tokenize(code))
     end
 
     private
-    
-    def to_atom(element)
-      res = element.match(%r{\".*\"})
-      if res
-        element.gsub('"', '')
+
+    def read_from(tokens)
+      raise StandardError('unexpected EOF while reading') if tokens.length == 0
+      token = tokens.shift
+      if '(' == token
+        list = []
+        while tokens[0] != ')'
+          list << read_from(tokens)
+        end
+        tokens.shift
+        list
+      elsif ')' == token
+        raise StandardError('unexpected')
       else
-        element.to_sym
+        atom(token)
       end
     end
 
-    def s_exp(code)
-      code.gsub('(', ' ( ').gsub(')', ' ) ').split
-    end
-    
-    def s_to_array(code)
-      scope = 0
-      code.drop(1).each_with_object([]) do |element, s|
-        case element
-        when '('
-          scope += 1
-          s << 
-        when ')'
-          scope -= 1
-        else
-          if scope == 0
-            s << to_atom(element)
-          else
-            s[scope] << to_atom(element)
-          end
-        end
+    def atom(token)
+      if token.match(/^[0-9].$/)
+        token.to_i
+      elsif token.match(%r{\".*\"})
+        token.gsub('"', '')
+      else
+        token.to_sym
       end
+    end
+
+    def tokenize(s)
+      s.gsub('(', ' ( ').gsub(')', ' ) ').split(' ')
     end
   end
 end
