@@ -1,5 +1,4 @@
 require 'pry'
-require 'env'
 
 class Eval
   class << self
