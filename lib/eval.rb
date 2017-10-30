@@ -1,5 +1,5 @@
 require 'pry'
-require 'basic_func'
+require './lib/basic_func'
 
 class Eval
   class << self
