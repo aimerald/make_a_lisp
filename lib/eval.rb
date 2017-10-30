@@ -6,7 +6,7 @@ class Eval
     def execute(list:)
       stack = list.map do |atom|
         case atom
-        when :if
+        when :if, :cond
           list.shift
           if evaluate(list.shift)
             list.pop
@@ -15,7 +15,7 @@ class Eval
           end
           return evaluate(list.first)
         when :lambda
-          return 200
+          binding.pry
         when Array
           execute(list: atom)
         else
