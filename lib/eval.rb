@@ -6,8 +6,18 @@ class Eval
     def execute(list:)
       stack = list.map do |atom|
         case atom
+        when :if
+          list.shift
+          if evaluate(list.shift)
+            list.pop
+          else
+            list.shift
+          end
+          return evaluate(list.first)
+        when :lambda
+          return 200
         when Array
-          evaluate(atom)
+          execute(list: atom)
         else
           atom
         end
@@ -16,6 +26,14 @@ class Eval
     end
 
     private
+
+    def car(list)
+      list.first
+    end
+
+    def cdr(list)
+      list.drop(1)
+    end
 
     def evaluate(list)
       env = BasicFunc.import

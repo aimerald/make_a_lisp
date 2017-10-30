@@ -15,7 +15,7 @@ class BasicFunc
        "-": -> list { list.inject(:-) },
        "*": -> list { list.inject(:*) },
        "/": -> list { list.inject(:/) },
-       mod: -> list { list.inject(:%) }
+       "%": -> list { list.inject(:%) },
       }
     end
   end
