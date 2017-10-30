@@ -1,4 +1,5 @@
 require 'pry'
+require 'basic_func'
 
 class Eval
   class << self
@@ -17,26 +18,13 @@ class Eval
     private
 
     def evaluate(list)
-      env = global_env()
+      env = BasicFunc.import
       case list.first
       when Symbol
         env[list.first][list.drop(1).flatten]
       else
         list
       end
-    end
-
-    def global_env
-      {
-        puts: -> list { puts list },
-        car: -> list { list.first },
-        cdr: -> list { list.drop(1) },
-        "+": -> list { list.inject(:+) },
-       "-": -> list { list.inject(:-) },
-       "*": -> list { list.inject(:*) },
-       "/": -> list { list.inject(:/) },
-       mod: -> list { list.inject(:%) }
-      }
     end
   end
 end

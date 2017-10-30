@@ -2,16 +2,6 @@ require 'pry'
 require 'eval'
 
 RSpec.describe "Eval.executeにS式を配列にしたものを渡すと評価される" do
-  it ":carは配列の先頭を取得する" do
-    list = [:car, ["hello", "world"]]
-    expect(Eval.execute(list: list)).to eq('hello')
-  end
-
-  it ':cdrは配列の2個め以降を取得する'do
-    list = [:cdr, ["hello", "world", "I am", "apple"]]
-    expect(Eval.execute(list: list)).to eq(["world", "I am", "apple"])
-  end
-
   it ':putsは文字列を標準出力する' do
     list = [:puts, "hello world"]
     Eval.execute(list: list)
