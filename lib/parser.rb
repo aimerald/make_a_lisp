@@ -26,7 +26,7 @@ class Parser
         read_from(tokens)
       else
         atom(token)
-        end
+      end
     end
 
     def tokenize(s)
